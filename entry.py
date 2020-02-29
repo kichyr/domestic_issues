@@ -1,6 +1,6 @@
 import telebot
 import re
-from state_interface import UserState
+from state_interface import UserState, usersLoggedFlag
 from register_states import *
 TOCKEN = '1068115374:AAGRpl9gJMcG4gow-QxHT5FplW2BMUZ2abg'
 
@@ -13,6 +13,7 @@ usersStates = {} # key - chat_id, value state
 
 @bot.message_handler(commands=['start'])
 def show_comand_list(message):
+    usersLoggedFlag[message.chat.id] = False
     usersStates[message.chat.id] = InitialRegisterState()
     usersStates[message.chat.id].process_message(usersStates, message, bot)
 
