@@ -52,11 +52,11 @@ class AcademicBuildingsStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
         but = []
-        for dom in dormitories:
-            but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
+        for academ in academic_buildings:
+            but.append(types.InlineKeyboardButton(text=academ, callback_data=academ))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
-        for dom in but:
-            key.add(dom)
+        for academ in but:
+            key.add(academ)
         bot.send_message(message.chat.id, "Укажите академический корпус", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
