@@ -28,6 +28,7 @@ class ProblemState(UserState):
 
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
+        print("1")
         key = types.InlineKeyboardMarkup()
         but_1 = types.InlineKeyboardButton(text="№1", callback_data="№1")
         but_2 = types.InlineKeyboardButton(text="№2", callback_data="№2")
