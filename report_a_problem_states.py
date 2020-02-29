@@ -18,6 +18,8 @@ class ProblemState(UserState):
         if c.data == 'Общежитие':
             bot.send_message(c.message.chat.id, 'Уточните общежитие')
             usersStates[c.message.chat.id] = DormitoriesStates()
+            usersStates[c.message.chat.id].process_message(usersStates, message, bot)
+            #print("1")
         if c.data == 'Учебный корпус':
             bot.send_message(c.message.chat.id, 'Уточните учебный корпус')
             usersStates[c.message.chat.id] = AcademicBuildingsStates()
@@ -28,7 +30,6 @@ class ProblemState(UserState):
 
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
-        print("1")
         key = types.InlineKeyboardMarkup()
         but_1 = types.InlineKeyboardButton(text="№1", callback_data="№1")
         but_2 = types.InlineKeyboardButton(text="№2", callback_data="№2")
