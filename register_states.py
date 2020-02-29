@@ -1,5 +1,5 @@
 
-from state_interface import UserState, usersLoggedFlag
+from state_interface import UserState, usersLoggedFlag, save_users_info_to_file, LoggedAFKstate, emails
 from uuid import uuid4
 from email_sender import send_verification_message
 
@@ -7,7 +7,7 @@ class InitialRegisterState(UserState):
     def process_message(self, usersStates, message, bot):
         bot.send_message(message.chat.id,
             "Привет, для начала диалога необходимо авторизироваться используя почту phystech.edu")
-        usersStates[message.chat.id] = LoginWithPhystechEduState()
+        usersStates[message.from_user.username] = LoginWithPhystechEduState()
 
 class LoginWithPhystechEduState(UserState):
     def process_message(self, usersStates, message, bot):
@@ -26,11 +26,12 @@ class LoginWithPhystechEduState(UserState):
             bot.send_message(message.chat.id, "Введите корректный email")
             return
         bot.send_message(message.chat.id, "Проверьте ваш почтовый ящик")
-        usersStates[message.chat.id] = WaitForRightTockenState(verification_tocken)
+        usersStates[message.from_user.username] = WaitForRightTockenState(verification_tocken, message.text)
 
 class WaitForRightTockenState(UserState):
-    def __init__(self, tocken):
+    def __init__(self, tocken, email):
         self.tocken = tocken
+        self.email = email
     def process_message(self, usersStates, message, bot):
         print(message.text)
         print(self.tocken)
@@ -39,8 +40,10 @@ class WaitForRightTockenState(UserState):
             Ваш email успешно подтвержен!
             Теперь вы можете сообщать о проблемах в кампусе,
             администрация постарается как можно быстрее их обработать""")
-            usersLoggedFlag[message.chat.id] = True
-
+            usersLoggedFlag[message.from_user.username] = True
+            emails[message.from_user.username] = self.email
+            save_users_info_to_file()
+            usersStates[message.from_user.username] = LoggedAFKstate()
         else: 
             bot.send_message(message.chat.id, "Неправильный токен")
 
