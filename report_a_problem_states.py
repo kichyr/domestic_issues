@@ -19,12 +19,10 @@ class ProblemState(UserState):
         bot.send_message(message.chat.id, "Уточните, где произошла проблема", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Общежитие':
-            bot.send_message(c.message.chat.id, 'Уточните общежитие')
             usersStates[c.message.chat.id] = DormitoriesStates()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
             #print("1")
         if c.data == 'Учебный корпус':
-            bot.send_message(c.message.chat.id, 'Уточните учебный корпус')
             usersStates[c.message.chat.id] = AcademicBuildingsStates()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
         if c.data == 'Другое':
@@ -57,7 +55,7 @@ class AcademicBuildingsStates(UserState):
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
         for academ in but:
             key.add(academ)
-        bot.send_message(message.chat.id, "Укажите академический корпус", reply_markup=key)
+        bot.send_message(message.chat.id, "Укажите учебный корпус", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
