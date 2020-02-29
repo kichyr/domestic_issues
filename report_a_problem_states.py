@@ -6,6 +6,7 @@ from telebot import types
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('Общежитие', 'Учебный корпус', 'Другое')
 dormitories = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
+academic_buildings = ['НК', 'ГК', "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
 back = "Назад"
 
 class ProblemState(UserState):
@@ -36,7 +37,7 @@ class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
         for dom in dormitories:
-            but.append(types.InlineKeyboardButton(text=dom, callback_data=dom) 
+            but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
         key.add(but)
         bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
