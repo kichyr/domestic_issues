@@ -18,7 +18,7 @@ class ProblemState(UserState):
         if c.data == 'Общежитие':
             bot.send_message(c.message.chat.id, 'Уточните общежитие')
             usersStates[c.message.chat.id] = DormitoriesStates()
-            usersStates[c.message.chat.id].process_message(usersStates, message, bot)
+            usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
             #print("1")
         if c.data == 'Учебный корпус':
             bot.send_message(c.message.chat.id, 'Уточните учебный корпус')
