@@ -38,7 +38,7 @@ class DormitoriesStates(UserState):
             but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
         #for dom in but:
-            key.add(but)
+            key.add(but[]
         bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
