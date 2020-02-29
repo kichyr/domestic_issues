@@ -6,7 +6,7 @@ from telebot import types
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('Общежитие', 'Учебный корпус', 'Другое')
 dormitories = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
-academic_buildings = ['НК', 'ГК', "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
+academic_buildings = ['НК', 'ГК', "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "КПМ", "СK №1", "СK №2", "СK Бассейн", "КСП"]
 back = "Назад"
 
 class ProblemState(UserState):
@@ -40,7 +40,8 @@ class DormitoriesStates(UserState):
         for dom in dormitories:
             but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
-        key.add(but)
+        for dom in but:
+            key.add(dom)
         bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
@@ -50,21 +51,12 @@ class DormitoriesStates(UserState):
 class AcademicBuildingsStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text="НК", callback_data="НК")
-        but_2 = types.InlineKeyboardButton(text="ГК", callback_data="ГК")
-        but_3 = types.InlineKeyboardButton(text="ЛК", callback_data="ЛК")
-        but_4 = types.InlineKeyboardButton(text="АК", callback_data="АК")
-        but_5 = types.InlineKeyboardButton(text="Физтех-Био", callback_data="Физтех-Био")
-        but_6 = types.InlineKeyboardButton(text="КПМ", callback_data="КПМ")
-        but_7 = types.InlineKeyboardButton(text="Радиокорпус", callback_data="Радиокорпус")
-        but_8 = types.InlineKeyboardButton(text="Цифра", callback_data="Цифра")
-        but_9 = types.InlineKeyboardButton(text="Арктика", callback_data="Арктика  ")
-        but_10 = types.InlineKeyboardButton(text="СK №1", callback_data="СK №1")
-        but_11 = types.InlineKeyboardButton(text="СK №2", callback_data="СK №2")
-        but_12 = types.InlineKeyboardButton(text="СК Бассейн", callback_data="СК Бассейн")
-        but_13 = types.InlineKeyboardButton(text="Назад", callback_data="Назад")
-        key.add(but_1, but_2, but_3, but_4, but_5, but_6, but_7, but_8, but_9, but_10, but_11, but_12, but_13)
-        bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
+        but = []
+        for dom in dormitories:
+            but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
+        but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
+        key.add(but)
+        bot.send_message(message.chat.id, "Укажите академический корпус", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
