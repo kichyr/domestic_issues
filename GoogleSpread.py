@@ -1,6 +1,7 @@
 import httplib2
 import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
+from googleapiclient import discovery
 
 CREDENTIALS_FILE = 'domesticissuesmiptbot-5f079ab8d247.json'  # имя файла с закрытым ключом
 
@@ -12,6 +13,7 @@ class Spreadsheet:
             'https://www.googleapis.com/auth/drive'])
         self.httpAuth = self.credentials.authorize(httplib2.Http())
         self.service = apiclient.discovery.build('sheets', 'v4', http=self.httpAuth)
+        self.serviceRead = discovery.build('sheets', 'v4', credentials=self.credentials)
         self.driveService = None  # Needed only for sharing
         self.spreadsheetId = None
         self.sheetId = None
@@ -63,7 +65,7 @@ class Spreadsheet:
         spreadsheet = self.service.spreadsheets().get(spreadsheetId=spreadsheetId).execute()
         self.spreadsheetId = spreadsheet['spreadsheetId']
         self.sheetId = spreadsheet['sheets'][0]['properties']['sheetId']
-        self.sheetTitle = spreadsheet['sheets']['properties']['title']
+        self.sheetTitle = spreadsheet['sheets'][0]['properties']['title']
 
     def prepare_setDimensionPixelSize(self, dimension, startIndex, endIndex, pixelSize):
         self.requests.append({"updateDimensionProperties": {
@@ -135,7 +137,7 @@ else:
 ss.shareWithAnybodyForReading()
 ss.shareWithEmailForWriting('kichyr13@gmail.com')
 
-
 ss.runPrepared()
-
+request = ss.serviceRead.spreadsheets().values().get(spreadsheetId=ss.spreadsheetId, range="A1:F1")
+print(request.execute())
 print(ss.getSheetURL())
