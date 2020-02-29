@@ -80,9 +80,9 @@ class Problems_expert(UserState):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
-        else: 
+        #else: 
             #Читаем комментарий/обращение и записываем в соотвествующее поле
 
 #class OtherProblemStates(UserState):
- #   def process_message(self, usersStates, message, bot):
+#    def process_message(self, usersStates, message, bot):
         #Читаем комментарий/обращение и записываем в соотвествующее поле
