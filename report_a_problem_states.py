@@ -71,7 +71,7 @@ class Problems_expert(UserState):
         key = types.InlineKeyboardMarkup()
         but = []
         for exp in experts:
-            but.append(types.InlineKeyboardButton(text=academ, callback_data=academ))
+            but.append(types.InlineKeyboardButton(text=exp, callback_data=exp))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
         for exp in but:
             key.add(exp)
