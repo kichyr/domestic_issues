@@ -83,6 +83,6 @@ class Problems_expert(UserState):
         else: 
             #Читаем комментарий/обращение и записываем в соотвествующее поле
 
-class OtherProblemStates(UserState):
-    def process_message(self, usersStates, message, bot):
+#class OtherProblemStates(UserState):
+ #   def process_message(self, usersStates, message, bot):
         #Читаем комментарий/обращение и записываем в соотвествующее поле
