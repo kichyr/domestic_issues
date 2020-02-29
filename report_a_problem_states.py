@@ -17,13 +17,13 @@ class ProblemState(UserState):
     def process_button(self, usersStates, c, bot):
         if c.data == 'Общежитие':
             bot.send_message(c.message.chat.id, 'Уточните общежитие')
-            usersStates[c.chat.id] = DormitoriesStates()
+            usersStates[c.message.chat.id] = DormitoriesStates()
         if c.data == 'Учебный корпус':
             bot.send_message(c.message.chat.id, 'Уточните учебный корпус')
-            usersStates[c.chat.id] = AcademicBuildingsStates()
+            usersStates[c.message.chat.id] = AcademicBuildingsStates()
         if c.data == 'Другое':
             bot.send_message(c.message.chat.id, 'Опишите вашу проблему')
-            usersStates[c.chat.id] = OtherStates()
+            usersStates[c.message.chat.id] = OtherStates()
 
 
 class DormitoriesStates(UserState):
