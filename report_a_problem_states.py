@@ -7,6 +7,7 @@ keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('Общежитие', 'Учебный корпус', 'Другое')
 dormitories = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
 academic_buildings = ['НК', 'ГК', "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "КПМ", "СK №1", "СK №2", "СK Бассейн", "КСП"]
+experts = ['Сантехник', 'Электрик', 'Плотник', 'Специалист по дезинсекции', 'Другое']
 back = "Назад"
 
 class ProblemState(UserState):
@@ -21,15 +22,13 @@ class ProblemState(UserState):
         if c.data == 'Общежитие':
             usersStates[c.message.chat.id] = DormitoriesStates()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
-            #print("1")
         if c.data == 'Учебный корпус':
             usersStates[c.message.chat.id] = AcademicBuildingsStates()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
         if c.data == 'Другое':
             bot.send_message(c.message.chat.id, 'Опишите вашу проблему')
-            usersStates[c.message.chat.id] = OtherStates()
+            usersStates[c.message.chat.id] = OtherProblemStates()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
-
 
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
@@ -44,6 +43,9 @@ class DormitoriesStates(UserState):
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
+            usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
+        else: 
+            usersStates[c.message.chat.id] = Problems_expert()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
 
 class AcademicBuildingsStates(UserState):
@@ -60,3 +62,27 @@ class AcademicBuildingsStates(UserState):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
+        else: 
+            usersStates[c.message.chat.id] = Problems_expert()
+            usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
+
+class Problems_expert(UserState):
+    def process_message(self, usersStates, message, bot):
+        key = types.InlineKeyboardMarkup()
+        but = []
+        for exp in experts:
+            but.append(types.InlineKeyboardButton(text=academ, callback_data=academ))
+        but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
+        for exp in but:
+            key.add(exp)
+        bot.send_message(message.chat.id, "Выберите требуемого специалиста", reply_markup=key)
+    def process_button(self, usersStates, c, bot):
+        if c.data == 'Назад':
+            usersStates[c.message.chat.id] = ProblemState()
+            usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
+        else: 
+            #Читаем комментарий/обращение и записываем в соотвествующее поле
+
+class OtherProblemStates(UserState):
+    def process_message(self, usersStates, message, bot):
+        #Читаем комментарий/обращение и записываем в соотвествующее поле
