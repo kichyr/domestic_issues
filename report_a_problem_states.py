@@ -5,6 +5,8 @@ from telebot import types
 
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('Общежитие', 'Учебный корпус', 'Другое')
+dormitories = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ"]
+back = "Назад"
 
 class ProblemState(UserState):
     def process_message(self, usersStates, message, bot):
@@ -33,21 +35,10 @@ class ProblemState(UserState):
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text="№1", callback_data="№1")
-        but_2 = types.InlineKeyboardButton(text="№2", callback_data="№2")
-        but_3 = types.InlineKeyboardButton(text="№3", callback_data="№3")
-        but_4 = types.InlineKeyboardButton(text="№4", callback_data="№4")
-        but_5 = types.InlineKeyboardButton(text="Зюзино", callback_data="Зюзино")
-        but_6 = types.InlineKeyboardButton(text="№6", callback_data="№6")
-        but_7 = types.InlineKeyboardButton(text="№7", callback_data="№7")
-        but_8 = types.InlineKeyboardButton(text="№8", callback_data="№8")
-        but_9 = types.InlineKeyboardButton(text="№9", callback_data="№9")
-        but_10 = types.InlineKeyboardButton(text="№10", callback_data="№10")
-        but_11 = types.InlineKeyboardButton(text="№11", callback_data="№11")
-        but_12 = types.InlineKeyboardButton(text="№12", callback_data="№12")
-        but_13 = types.InlineKeyboardButton(text="Общежитие ФАЛТ", callback_data="Общежитие ФАЛТ")        
-        but_14 = types.InlineKeyboardButton(text="Назад", callback_data="Назад")
-        key.add(but_1, but_2, but_3, but_4, but_5, but_6, but_7, but_8, but_9, but_10, but_11, but_12, but_13, but_14)
+        for i in len(dormitories):
+            but[i] = types.InlineKeyboardButton(text=places[i], callback_data=places[i])    
+        but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
+        key.add(but)
         bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
