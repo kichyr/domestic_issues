@@ -36,6 +36,7 @@ class ProblemState(UserState):
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
+        but = []
         for dom in dormitories:
             but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
