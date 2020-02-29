@@ -55,7 +55,8 @@ class AcademicBuildingsStates(UserState):
         for dom in dormitories:
             but.append(types.InlineKeyboardButton(text=dom, callback_data=dom))
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
-        key.add(but)
+        for dom in but:
+            key.add(dom)
         bot.send_message(message.chat.id, "Укажите академический корпус", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
