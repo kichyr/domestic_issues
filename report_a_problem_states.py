@@ -35,8 +35,8 @@ class ProblemState(UserState):
 class DormitoriesStates(UserState):
     def process_message(self, usersStates, message, bot):
         key = types.InlineKeyboardMarkup()
-        for i in len(dormitories):
-            but[i] = types.InlineKeyboardButton(text=places[i], callback_data=places[i])    
+        for dom in dormitories:
+            but.append(types.InlineKeyboardButton(text=dom, callback_data=dom) 
         but.append(types.InlineKeyboardButton(text="Назад", callback_data="Назад"))
         key.add(but)
         bot.send_message(message.chat.id, "Укажите общежитие", reply_markup=key)
