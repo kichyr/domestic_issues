@@ -4,6 +4,8 @@ import json
 class UserState: 
     def process_message (self, usersStates, message, bot): 
         pass
+    def process_button (self, usersStates, c, bot):
+        pass
 
 class LoggedAFKstate(UserState):
     def process_message(self, usersStates, message, bot):

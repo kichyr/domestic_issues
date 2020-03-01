@@ -7,7 +7,7 @@ class InitialRegisterState(UserState):
     def process_message(self, usersStates, message, bot):
         bot.send_message(message.chat.id,
             "Привет, для начала диалога необходимо авторизироваться используя почту phystech.edu")
-        usersStates[message.from_user.username] = LoginWithPhystechEduState()
+        usersStates[message.chat.id] = LoginWithPhystechEduState()
 
 class LoginWithPhystechEduState(UserState):
     def process_message(self, usersStates, message, bot):
@@ -26,7 +26,7 @@ class LoginWithPhystechEduState(UserState):
             bot.send_message(message.chat.id, "Введите корректный email")
             return
         bot.send_message(message.chat.id, "Проверьте ваш почтовый ящик")
-        usersStates[message.from_user.username] = WaitForRightTockenState(verification_tocken, message.text)
+        usersStates[message.chat.id] = WaitForRightTockenState(verification_tocken, message.text)
 
 class WaitForRightTockenState(UserState):
     def __init__(self, tocken, email):
@@ -43,7 +43,7 @@ class WaitForRightTockenState(UserState):
             usersLoggedFlag[message.from_user.username] = True
             emails[message.from_user.username] = self.email
             save_users_info_to_file()
-            usersStates[message.from_user.username] = LoggedAFKstate()
+            usersStates[message.chat.id] = LoggedAFKstate()
         else: 
             bot.send_message(message.chat.id, "Неправильный токен")
 
