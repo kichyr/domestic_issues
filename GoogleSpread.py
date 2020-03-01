@@ -22,7 +22,7 @@ class Spreadsheet:
         self.valueRanges = []
 
     # Creates new spreadsheet
-    def create(self, title="Бытовые проблемы", sheetTitle = ["Сводка"], rows=1000, cols=7, locale='ru_RU',
+    def create(self, title="Бытовые проблемы", sheetTitle = ["Сводка"], rows=1000, cols=8, locale='ru_RU',
                timeZone='Etc/GMT'):
         spreadsheet = self.service.spreadsheets().create(body={
             'properties': {'title': title, 'locale': locale, 'timeZone': timeZone},
@@ -119,8 +119,8 @@ class Spreadsheet:
 
     def create2(self):
         self.create()
-        self.prepare_setValues("Сводка", "A1:G1",
-                             [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
+        self.prepare_setValues("Сводка", "A1:H1",
+                             [["id","Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Статус"]])
         self.prepare_setColumnWidth(4, 500)
         places = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ", 'НК',
                   'ГК',
@@ -128,9 +128,10 @@ class Spreadsheet:
                   "КСП"]
         for place in places:
             self.prepare_addSheet(place)
-            self.prepare_setValues(place, "A1:G1",
-                                 [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
+            self.prepare_setValues(place, "A1:H1",
+                                 [["id", "Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Статус"]])
             self.prepare_setColumnWidth(4, 500)
+
 
 
 ss = Spreadsheet(CREDENTIALS_FILE)
@@ -141,10 +142,12 @@ if p == '0':
 else:
     ss.setSpreadsheetById(p)
 
-ss.shareWithAnybodyForReading()
-ss.shareWithEmailForWriting('kichyr13@gmail.com')
+ss.shareWithAnybodyForWriting()
+# ss.shareWithEmailForWriting('kichyr13@gmail.com')
 
 ss.runPrepared()
-request = ss.serviceRead.spreadsheets().values().get(spreadsheetId=ss.spreadsheetId, range="A1:F1")
-print(request.execute())
+result = ss.serviceRead.spreadsheets().values().get(spreadsheetId=ss.spreadsheetId, range="G2:G2").execute()
+rows = result.get('values', [])
+
+print(rows)
 print(ss.getSheetURL())
