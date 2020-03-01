@@ -43,7 +43,8 @@ class DormitoriesStates(UserState):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
-        else: 
+        else:
+            #записать в номер общежития
             usersStates[c.message.chat.id] = Problems_expert()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
 
@@ -58,9 +59,11 @@ class AcademicBuildingsStates(UserState):
         bot.send_message(message.chat.id, "Укажите учебный корпус", reply_markup=key)
     def process_button(self, usersStates, c, bot):
         if c.data == 'Назад':
+
             usersStates[c.message.chat.id] = ProblemState()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
         else: 
+            #записать название академического корпуса
             usersStates[c.message.chat.id] = Problems_expert()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
 
@@ -78,10 +81,12 @@ class Problems_expert(UserState):
         if c.data == 'Назад':
             usersStates[c.message.chat.id] = ProblemState()
             usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
-        #else: 
-            #Читаем комментарий/обращение и записываем в соотвествующее поле
+        else:            
+            usersStates[c.message.chat.id] = OtherProblemStates()
+            usersStates[c.message.chat.id].process_message(usersStates, c.message, bot)
 
 class OtherProblemStates(UserState):
     def process_message(self, usersStates, message, bot):
+        print("Пожалуйста, опишите, как можно подробнее, вашу жалобу!")
         #Читаем комментарий/обращение и записываем в соотвествующее поле
         pass

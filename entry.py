@@ -32,7 +32,6 @@ def report_problem_handler(message):
     usersStates[message.chat.id] = ProblemState()
     usersStates[message.chat.id].process_message(usersStates, message, bot)
 
-
 #################### END ##################
 
 #all text messages come here
@@ -43,9 +42,7 @@ def send_text(message):
 
 @bot.callback_query_handler(func=lambda c:True)
 def inlin(c):
-    #print(c)
     usersStates[c.message.chat.id].process_button(usersStates, c, bot)
-
 
 
 #start infinity cycle of getting messages 

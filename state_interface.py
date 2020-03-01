@@ -39,7 +39,6 @@ def load_saved():
             loaded_emails = data['usersEmails']
             for username, email in loaded_emails.items():
                 emails[username] = email
-
     except:
         print("error during reading of the save file")
         pass

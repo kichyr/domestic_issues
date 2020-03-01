@@ -46,12 +46,3 @@ class WaitForRightTockenState(UserState):
             usersStates[message.chat.id] = LoggedAFKstate()
         else: 
             bot.send_message(message.chat.id, "Неправильный токен")
-
-        
-
-            
-            
-
-
-            
-            
