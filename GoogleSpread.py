@@ -117,20 +117,27 @@ class Spreadsheet:
         self.sheetTitle = addedSheet['title']
         return self.sheetId
 
+    def create2(self):
+        self.create()
+        self.prepare_setValues("Сводка", "A1:G1",
+                             [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
+        self.prepare_setColumnWidth(4, 500)
+        places = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ", 'НК',
+                  'ГК',
+                  "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "КПМ", "СK №1", "СK №2", "СK Бассейн",
+                  "КСП"]
+        for place in places:
+            self.prepare_addSheet(place)
+            self.prepare_setValues(place, "A1:G1",
+                                 [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
+            self.prepare_setColumnWidth(4, 500)
+
 
 ss = Spreadsheet(CREDENTIALS_FILE)
 p = str(input("Таблица, в которую вы хотите собирать данные введите spreadsheetId или 0"))
 
 if p == '0':
-    ss.create()
-    ss.prepare_setValues("Сводка","A1:G1", [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
-    ss.prepare_setColumnWidth(4, 500)
-    places = ['№1', '№2', "№3", "№4", "Зюзино", "№6", "№7", "№8", "№9", "№10", "№11", "№12", "ФАЛТ МФТИ", 'НК', 'ГК',
-              "ЛК", "АК", "Физтех-Био", "Радиокорпус", "Цифра", "Арктика", "КПМ", "СK №1", "СK №2", "СK Бассейн", "КСП"]
-    for place in places:
-        ss.prepare_addSheet(place)
-        ss.prepare_setValues(place, "A1:G1",
-                             [["Login", "Почта", "Здание", "Специфика", "Проблема", "Комментарии", "Выполнено"]])
+    ss.create2()
 else:
     ss.setSpreadsheetById(p)
 
